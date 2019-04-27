@@ -10,8 +10,9 @@ public class RayTracingMaster : MonoBehaviour
     private Camera _camera;
     private RenderTexture _target;
     public Texture SkyboxTexture;
+    public int Bounces = 3, SphereGridX = 10, SphereGridY = 10, SphereGridGap = 2;
     private uint _currentSample = 0;
-    private float speed = 1f;
+    public float Speed = 1;
     private Material _addMaterial;
 
     private void OnRenderImage(RenderTexture source, RenderTexture destination)
@@ -55,19 +56,19 @@ public class RayTracingMaster : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                transform.Rotate(new Vector3(2*speed * Time.deltaTime, 0, 0));
+                transform.Rotate(new Vector3(2*Speed * Time.deltaTime, 0, 0));
             }
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                transform.Rotate(new Vector3(-2*speed * Time.deltaTime, 0, 0));
+                transform.Rotate(new Vector3(-2*Speed * Time.deltaTime, 0, 0));
             }
             if (Input.GetKey(KeyCode.DownArrow))
             {
-                transform.Rotate(new Vector3(0, -2*speed * Time.deltaTime, 0));
+                transform.Rotate(new Vector3(0, -2*Speed * Time.deltaTime, 0));
             }
             if (Input.GetKey(KeyCode.UpArrow))
             {
-                transform.Rotate(new Vector3(0, 2*speed * Time.deltaTime, 0));
+                transform.Rotate(new Vector3(0, 2*Speed * Time.deltaTime, 0));
             }
         }
         //pan
@@ -75,19 +76,19 @@ public class RayTracingMaster : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
+                transform.Translate(new Vector3(Speed * Time.deltaTime, 0, 0));
             }
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                transform.Translate(new Vector3(-speed * Time.deltaTime, 0, 0));
+                transform.Translate(new Vector3(-Speed * Time.deltaTime, 0, 0));
             }
             if (Input.GetKey(KeyCode.DownArrow))
             {
-                transform.Translate(new Vector3(0, -speed * Time.deltaTime, 0));
+                transform.Translate(new Vector3(0, -Speed * Time.deltaTime, 0));
             }
             if (Input.GetKey(KeyCode.UpArrow))
             {
-                transform.Translate(new Vector3(0, speed * Time.deltaTime, 0));
+                transform.Translate(new Vector3(0, Speed * Time.deltaTime, 0));
             }
         }
         //navigate
@@ -95,19 +96,19 @@ public class RayTracingMaster : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
+                transform.Translate(new Vector3(Speed * Time.deltaTime, 0, 0));
             }
             if (Input.GetKey(KeyCode.LeftArrow))
             {
-                transform.Translate(new Vector3(-speed * Time.deltaTime, 0, 0));
+                transform.Translate(new Vector3(-Speed * Time.deltaTime, 0, 0));
             }
             if (Input.GetKey(KeyCode.DownArrow))
             {
-                transform.Translate(new Vector3(0, 0, -speed * Time.deltaTime));
+                transform.Translate(new Vector3(0, 0, -Speed * Time.deltaTime));
             }
             if (Input.GetKey(KeyCode.UpArrow))
             {
-                transform.Translate(new Vector3(0, 0, speed * Time.deltaTime));
+                transform.Translate(new Vector3(0, 0, Speed * Time.deltaTime));
             }
         }
 
@@ -133,6 +134,10 @@ public class RayTracingMaster : MonoBehaviour
         RayTracerShader.SetMatrix("_CameraInverseProjection", _camera.projectionMatrix.inverse);
         RayTracerShader.SetTexture(0, "_SkyboxTexture", SkyboxTexture);
         RayTracerShader.SetVector("_PixelOffset", new Vector2(Random.value, Random.value));
+        RayTracerShader.SetInt("_NumBounces", Bounces);
+        RayTracerShader.SetInt("_SphereGridX", SphereGridX);
+        RayTracerShader.SetInt("_SphereGridY", SphereGridY);
+        RayTracerShader.SetInt("_SphereGridGap", SphereGridGap);
     }
 
     //    // Start is called before the first frame update

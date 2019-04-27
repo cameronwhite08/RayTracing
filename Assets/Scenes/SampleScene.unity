@@ -278,3 +278,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RayTracerShader: {fileID: 7200000, guid: 32dc1616d418c1c438393dc70e540a76, type: 3}
   SkyboxTexture: {fileID: 2800000, guid: 053149775bcb8844d99c8f7941e48169, type: 3}
+  Bounces: 8
+  SphereGridX: 10
+  SphereGridY: 10
+  SphereGridGap: 2
+  Speed: 1
